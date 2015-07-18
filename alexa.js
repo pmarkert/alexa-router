@@ -124,6 +124,6 @@ function buildResponse(output, title, reprompt, shouldEndSession, session) {
 			}
 		};
 	}
-	result.response.shouldEndSession = (typeof shouldEndSession === "undefined" ? true : false)
+	result.response.shouldEndSession = (typeof shouldEndSession === "undefined" ? true : shouldEndSession)
 	return result;
 }
