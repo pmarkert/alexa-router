@@ -1,0 +1,27 @@
+{
+  "name": "alexa_router",
+  "version": "0.0.1",
+  "description": "Router framework for working with the Alexa SDK for responding to voice commands with Amazon Echo using AWS Lambda",
+  "main": "alexa.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmarkert/alexa_repository.git"
+  },
+  "keywords": [
+    "alexa",
+    "lambda",
+    "aws",
+    "amazon",
+    "echo",
+    "sdk"
+  ],
+  "author": "Phillip Markert <phillip@ephisys.com> (http://www.ephisys.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pmarkert/alexa_repository/issues"
+  },
+  "homepage": "https://github.com/pmarkert/alexa_repository#readme"
+}

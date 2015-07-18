@@ -1,0 +1,13 @@
+alexa_router is a framework that simplifies working with the Alexa SDK
+for Amazon lambda services.
+
+var alexa = require("alexa");
+var router = new alexa.Router();
+router.add("Intent1", function(params, session, callback, request) {
+	callback("You invoked Intent1");
+});
+
+router.add("Intent2", function(params, session, callback, request) {
+	callback("You invoked Intent2");
+});
+
