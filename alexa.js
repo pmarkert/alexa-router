@@ -4,8 +4,6 @@
 
 module.exports = { 
 	Router: Router,
-	buildResponse: buildResponse,
-	buildSpeechletResponse: buildSpeechletResponse
 }
 
 function Router() {
