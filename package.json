@@ -1,6 +1,6 @@
 {
   "name": "alexa_router",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Router framework for working with the Alexa SDK for responding to voice commands with Amazon Echo using AWS Lambda",
   "main": "alexa.js",
   "scripts": {
