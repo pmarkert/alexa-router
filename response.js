@@ -139,7 +139,7 @@ function alexa_response(event) {
 			result.response.reprompt = output_speech(self.reprompt_type, self.reprompt_text);
 		}
 
-		result.response.shouldEndSession: self.should_end_session,
+		result.response.shouldEndSession = self.should_end_session;
 
 		return result;
 	}
