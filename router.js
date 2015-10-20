@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(event, context) {
 	var self = this;	
 	self.intents = {};
 	self.applicationId = null;
@@ -19,7 +19,7 @@ module.exports = function() {
 			console.log("Request event: " + JSON.stringify(event));
 
 			if (event.session.new) {
-				console.log("session_started requestId=" + request.requestId + ", sessionId=" + session.sessionId);
+				console.log("session_started requestId=" + event.request.requestId + ", sessionId=" + event.session.sessionId);
 				if(self.session_started) {
 					return self.session_started(event, context, function(callback) {
 						handle_request(event, context);
@@ -27,7 +27,7 @@ module.exports = function() {
 				}
 			}
 			if (event.request.type === "SessionEndedRequest") {
-				console.log("session_ended requestId=" + request.requestId + ", sessionId=" + session.sessionId);
+				console.log("session_ended requestId=" + event.request.requestId + ", sessionId=" + event.session.sessionId);
 				if(self.session_ended) {
 					return session_ended(event, context.done);
 				}
@@ -36,8 +36,13 @@ module.exports = function() {
 			handle_request(event, context);
 		} 
 		catch (e) {
-			console.log("Caught unhandled error: " + JSON.stringify(e));
-			context.fail("Error: " + JSON.stringify(e));
+			if(e.stack) {
+				console.log("Caught unhandled stack-trace error: " + e.stack);
+			}
+			else {
+				console.log("Caught unhandled error: " + JSON.stringify(e));
+			}
+			context.fail("An error occurred.");
 		}
 	}
 
@@ -52,30 +57,30 @@ module.exports = function() {
 			}
 			if(self.launch_handler.length === 2) {
 				return handler(event, function(response) {
-					context.succeed(response);
+					context.succeed(response.render());
 				});
 			}
 			else {
-				return context.succeed(self.launch_handler(event));
+				return context.succeed(self.launch_handler(event).render());
 			}
 		}
 		else if (event.request.type === "IntentRequest") {
-			console.log("IntentRequest - " + request.intent.name);
-			for(var key in request.intent.slots) {
-				params[key] = request.intent.slots[key].value;
+			console.log("IntentRequest - " + event.request.intent.name);
+			for(var key in event.request.intent.slots) {
+				params[key] = event.request.intent.slots[key].value;
 			}
-			handler = self.intents[request.intent.name];
+			handler = self.intents[event.request.intent.name];
 			if(!handler) {
-				console.log("Intent - " + request.intent.name + " not registered.");
+				console.log("Intent - " + event.request.intent.name + " not registered.");
 				return context.fail("Invalid Intent");
 			}
 			if(handler.length === 3) {
 				return handler(params, event, function(response) {
-					context.succeed(response);
+					context.succeed(response.render());
 				});
 			}
 			else {
-				return context.succeed(handler(params, event));
+				return context.succeed(handler(params, event).render());
 			}
 		}
 	};

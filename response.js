@@ -24,7 +24,7 @@ function alexa_response(event) {
 	};
 	self.end_session = end_session;
 	self.session = set_session;
-	self.render = toString;
+	self.render = render;
 
 	return self;
 
@@ -99,6 +99,9 @@ function alexa_response(event) {
 	}
 
 	function end_session(end_session) {
+		if(typeof end_session === "undefined") {
+			end_session = true;
+		}
 		self.should_end_session = end_session;
 		return self;
 	}
@@ -113,7 +116,7 @@ function alexa_response(event) {
 		return self;
 	}
 
-	function toString() {
+	function render() {
 		var result = {
 			version: self.version,
 			shouldEndSession: self.should_end_session,
@@ -137,7 +140,7 @@ function alexa_response(event) {
 			result.response.reprompt = output_speech(self.reprompt_type, self.reprompt_text);
 		}
 
-		return JSON.stringify(result, null, 2);
+		return result;
 	}
 
 	function output_speech(type, text) {
