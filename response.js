@@ -119,7 +119,6 @@ function alexa_response(event) {
 	function render() {
 		var result = {
 			version: self.version,
-			shouldEndSession: self.should_end_session,
 		};
 
 		if(self.session && self.session.attributes) {
@@ -139,6 +138,8 @@ function alexa_response(event) {
 		if(self.reprompt_type) {
 			result.response.reprompt = output_speech(self.reprompt_type, self.reprompt_text);
 		}
+
+		result.response.shouldEndSession: self.should_end_session,
 
 		return result;
 	}
